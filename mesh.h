@@ -16,7 +16,8 @@ class wlMesh {
              wlMesh(const int count, const wlShader* shader);
              wlMesh(wlVertex* data, const int count, const wlShader* shader);
             ~wlMesh();
-        void render();
+        void bind_values();
+        void draw();
     private:
         int             count;
         wlVertex*       data;

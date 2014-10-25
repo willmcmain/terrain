@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include "mesh.h"
-/* ==================
- * wlMesh constructor
- * ================== */
+/* ===================
+ * wlMesh constructors
+ * =================== */
 wlMesh::wlMesh(const int count, const wlShader* shader) {
     this->count = count;
     this->shader = shader;
@@ -16,6 +16,7 @@ wlMesh::wlMesh(const int count, const wlShader* shader) {
     // Get shader variables
     shader_vars.position = glGetAttribLocation(shader->program, "position");
 }
+
 
 wlMesh::wlMesh(wlVertex* data, const int count, const wlShader* shader) {
     this->data = data;
@@ -39,11 +40,7 @@ wlMesh::~wlMesh() {
 }
 
 
-/* ===========
- * render mesh
- * =========== */
-void wlMesh::render() {
-    glUseProgram(shader->program);
+void wlMesh::bind_values() {
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glVertexAttribPointer(
         shader_vars.position,
@@ -51,12 +48,17 @@ void wlMesh::render() {
         GL_FLOAT,
         GL_FALSE,
         sizeof(wlVertex),
-        (void*)0
-        //(void*)offsetof(wlVertex, position)
+        (void*)offsetof(wlVertex, position)
     );
+}
+
+
+/* ===========
+ * render mesh
+ * =========== */
+void wlMesh::draw() {
+    bind_values();
     glEnableVertexAttribArray(shader_vars.position);
-    glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
     glDrawArrays(GL_TRIANGLES, 0, count);
     glDisableVertexAttribArray(shader_vars.position);
 }
