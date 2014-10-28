@@ -7,10 +7,6 @@ struct wlVertex {
     GLfloat position[3];
 };
 
-struct wlShaderVars {
-    GLuint position;
-};
-
 class wlMesh {
     public:
              wlMesh(const int count, const wlShader* shader);
@@ -22,7 +18,6 @@ class wlMesh {
         int             count;
         wlVertex*       data;
         const wlShader* shader;
-        wlShaderVars    shader_vars;
         GLuint          vbo;
 };
 #endif

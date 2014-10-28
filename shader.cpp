@@ -5,6 +5,44 @@
 
 using namespace std;
 
+/* ===========
+ * constructor
+ * =========== */
+wlShader::wlShader(const char* vertex_file, const char* fragment_file) {
+    GLint program_ok;
+
+    this->vertex_shader = make_shader(GL_VERTEX_SHADER, vertex_file);
+    this->fragment_shader = make_shader(GL_FRAGMENT_SHADER, fragment_file);
+    this->program = glCreateProgram();
+
+    glAttachShader(program, vertex_shader);
+    glAttachShader(program, fragment_shader);
+    glLinkProgram(program);
+
+    glGetProgramiv(program, GL_LINK_STATUS, &program_ok);
+    if(!program_ok) {
+        fprintf(stderr, "Failed to link shader program!\n");
+        glDeleteProgram(program);
+        exit(1);
+    }
+
+    vars.position = glGetAttribLocation(this->program, "position");
+    vars.projection = glGetUniformLocation(this->program, "projection");
+    vars.view = glGetUniformLocation(this->program, "view");
+}
+
+
+/* =========
+ * read_file
+ * ========= */
+wlShaderVars wlShader::get_vars() const {
+    return vars;
+}
+
+
+/* =========
+ * read_file
+ * ========= */
 char* read_file(const char* filename) {
     FILE* file = fopen(filename, "r");
     char* buffer;
@@ -25,6 +63,9 @@ char* read_file(const char* filename) {
 }
 
 
+/* =========
+ * read_file
+ * ========= */
 GLuint wlShader::make_shader(GLenum type, const char* filename) {
     char* source = read_file(filename);
     GLuint shader = glCreateShader(type);
@@ -42,24 +83,4 @@ GLuint wlShader::make_shader(GLenum type, const char* filename) {
     }
 
     return shader;
-}
-
-
-wlShader::wlShader(const char* vertex_file, const char* fragment_file) {
-    GLint program_ok;
-
-    this->vertex_shader = make_shader(GL_VERTEX_SHADER, vertex_file);
-    this->fragment_shader = make_shader(GL_FRAGMENT_SHADER, fragment_file);
-    this->program = glCreateProgram();
-
-    glAttachShader(program, vertex_shader);
-    glAttachShader(program, fragment_shader);
-    glLinkProgram(program);
-
-    glGetProgramiv(program, GL_LINK_STATUS, &program_ok);
-    if(!program_ok) {
-        fprintf(stderr, "Failed to link shader program!\n");
-        glDeleteProgram(program);
-        exit(1);
-    }
 }
