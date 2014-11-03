@@ -5,6 +5,7 @@
 
 struct wlVertex {
     GLfloat position[3];
+    GLfloat barycentric[3];
 };
 
 class wlMesh {

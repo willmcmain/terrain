@@ -4,6 +4,7 @@
 
 struct wlShaderVars {
     GLuint position;
+    GLuint barycentric;
     GLuint projection;
     GLuint view;
     GLuint camera;
