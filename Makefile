@@ -7,7 +7,7 @@ LDFLAGS = $(SDL_LIB) $(GL_LIB)
 
 all: $(EXE)
 
-$(EXE): main.o window.o shader.o mesh.o renderer.o
+$(EXE): main.o window.o shader.o mesh.o renderer.o camera.o
 	$(CXX) $(LDFLAGS) $^ -o $@
 
 .cpp.o:

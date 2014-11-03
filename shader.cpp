@@ -29,6 +29,7 @@ wlShader::wlShader(const char* vertex_file, const char* fragment_file) {
     vars.position = glGetAttribLocation(this->program, "position");
     vars.projection = glGetUniformLocation(this->program, "projection");
     vars.view = glGetUniformLocation(this->program, "view");
+    vars.camera = glGetUniformLocation(this->program, "camera");
 }
 
 

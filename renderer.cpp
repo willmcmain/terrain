@@ -63,6 +63,9 @@ void wlRenderer::set_view(const GLfloat* matrix) {
  * render
  * ====== */
 void wlRenderer::render() const {
+    float camerastuf[5] = {camera.position[0], camera.position[1],
+       camera.position[2], camera.xrot, camera.yrot};
+
     glUniformMatrix4fv(
         shader->get_vars().projection,
         1, GL_FALSE,
@@ -71,6 +74,11 @@ void wlRenderer::render() const {
         shader->get_vars().view,
         1, GL_FALSE,
         this->view);
+    glUniform1fv(
+        shader->get_vars().camera,
+        5,
+        camerastuf);
+
 
     glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);

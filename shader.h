@@ -6,6 +6,7 @@ struct wlShaderVars {
     GLuint position;
     GLuint projection;
     GLuint view;
+    GLuint camera;
 };
 
 class wlShader {

@@ -3,6 +3,7 @@
 
 #include "shader.h"
 #include "mesh.h"
+#include "camera.h"
 
 class wlRenderer {
     public:
@@ -12,6 +13,7 @@ class wlRenderer {
         void add_mesh(wlMesh*);
         void set_projection(const GLfloat* matrix);
         void set_view(const GLfloat* matrix);
+        wlCamera camera;
     private:
         const wlShader* shader;
         wlMesh**        meshes;
